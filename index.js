@@ -23,20 +23,20 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
   console.log('A user connected')
   socket.on('disconnect', () => {
-    var total = parseInt(totalmem()/Math.pow(1024, 2))
-    var free = parseInt(freemem()/Math.pow(1024, 2))
-    var percent = `${parseInt(free/total*100)}%`
-
-    var stats = {
-      platform: platform(),
-      cpus: cpus()[0].model,
-      arch: arch(),
-      total: `${total}MB`,
-      free: `${free}MB`,
-      percent
-    }
-
     setInterval(() => {
+      var total = parseInt(totalmem()/Math.pow(1024, 2))
+      var free = parseInt(freemem()/Math.pow(1024, 2))
+      var percent = `${parseInt(free/total*100)}%`
+
+      var stats = {
+        platform: platform(),
+        cpus: cpus()[0].model,
+        arch: arch(),
+        total: `${total}MB`,
+        free: `${free}MB`,
+        percent
+      }
+
       io.emit('content', stats)
     }, 1000)
   })
