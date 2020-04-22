@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Socket.IO system</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+    #free, #percent {
+      background: red; color: aliceblue; padding: 30px;
+    }
+    #sub-container {
+      padding: 30px;
+      box-shadow: inset 1px 1px 5px rgba(0,0,0,.2);
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="sub-container">
+      <h1 id='mainTitle'></h1>
+      <h2 id="platform"></h2>
+      <h2 id="cpus"></h2>
+      <h2 id="arch"></h2>
+      <h2 id='total'></h2>
+      <h2 id='free'></h2>
+      <h2 id='percent'></h2>
+    </div>
+  </div>
+</body>
+
+<script src='socket.io/socket.io.js'></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script>
+  $(function () {
+    var socket = io()
+    socket.on('content', (stats) => {
+      $('#platform').html(`Plataforma: ${stats.platform}`)
+      $('#cpus').html(`CPU info: ${stats.cpus}`)
+      $('#arch').html(`Arquitetura: ${stats.arch}`)
+      $('#total').html(`Total: ${stats.total}`)
+      $('#free').html(`Livre: ${stats.free}`)
+      $('#percent').html(`Porcentagem: ${stats.percent}`)
+    })
+  })
+</script>
+
+<script>
+  $('#mainTitle').html('Data').css({
+    "text-align": "center",
+    "font-weight": "500",
+    "font-size": "xxx-large"
+  })
+</script>
+
+<script>
+  $( '#container' ).css({
+    "width": "100%",
+    "height": "100vh",
+    "display": "flex",
+    "flex-direction": "row",
+    "align-items": "center",
+    "justify-content": "space-around",
+    "background-color": "rgba(255,0,0,.1)"
+  })
+</script>
+
+</html>
